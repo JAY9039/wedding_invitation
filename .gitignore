@@ -1,0 +1,5 @@
+.sites-local/
+node_modules/
+*.tar.gz
+*.tgz
+qa/
