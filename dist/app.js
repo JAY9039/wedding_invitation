@@ -6,10 +6,10 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 let language = "en";
 let coverTimer;
 let countdownTimer;
-let audioContext;
-let musicTimer;
 let soundEnabled = false;
+let musicPending = false;
 let musicRequest = 0;
+const backgroundMusic = $("#background-music");
 const choose = (english, hindi) => (language === "hi" ? hindi : english);
 const confirmedYear = Number.isInteger(invite.year) && invite.year >= 2026 && invite.year <= 9999;
 const confirmedTime = typeof invite.weddingTime === "string" && /^([01]\d|2[0-3]):[0-5]\d$/.test(invite.weddingTime);
@@ -73,6 +73,14 @@ $$("[data-language]").forEach((button) => {
 
 const cover = $("#invitation-cover");
 const content = $("#invite-content");
+function scrollAppToTop() {
+  const root = document.documentElement;
+  const previousBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto";
+  window.scrollTo(0, 0);
+  root.style.scrollBehavior = previousBehavior;
+}
+
 if (cover && content && $("#open-invitation")) {
   cover.hidden = false;
   content.inert = true;
@@ -86,6 +94,8 @@ if (cover && content && $("#open-invitation")) {
     if (event.key === "Escape") $("#open-invitation").click();
   });
   $("#open-invitation").addEventListener("click", () => {
+    scrollAppToTop();
+    void startMusic();
     clearTimeout(coverTimer);
     content.inert = false;
     cover.classList.add("is-open");
@@ -191,6 +201,7 @@ function updateCountdown() {
     days: Math.floor(remaining / 86400000),
     hours: Math.floor((remaining % 86400000) / 3600000),
     minutes: Math.floor((remaining % 3600000) / 60000),
+    seconds: Math.floor((remaining % 60000) / 1000),
   };
   Object.entries(values).forEach(([unit, value]) => {
     $$(`[data-countdown="${unit}"]`).forEach((element) => { element.textContent = String(value).padStart(2, "0"); });
@@ -198,120 +209,39 @@ function updateCountdown() {
   if (remaining === 0) clearInterval(countdownTimer);
 }
 
-function calendarEscape(value) {
-  return value.replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;");
-}
-
-function calendarTimestamp(date) {
-  return date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
-}
-
-const saveDate = $("#save-date");
-if (saveDate) {
-  saveDate.hidden = !confirmedYear;
-  saveDate.addEventListener("click", (event) => {
-    event.preventDefault();
-    if (!confirmedYear) return;
-    const stamp = calendarTimestamp(new Date());
-    const coupleLabel = `${invite.couple.groom[language]} ${choose("&", "और")} ${invite.couple.bride[language]}`;
-    const coupleId = `${invite.couple.groom.en}-${invite.couple.bride.en}-${invite.whatsapp}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-    const events = [
-      {
-        id: "engagement",
-        title: choose("Lagan Sagaai / Engagement", "लगन सगाई / सगाई"),
-        when: [`DTSTART:${calendarTimestamp(new Date(`${invite.year}-11-24T11:00:00+05:30`))}`],
-        venue: "Hotel Gwalior Regency, a member of Radisson Individuals, Link Road, near the City Bus Stand, Gwalior, Madhya Pradesh 474002",
-        time: choose("11:00 AM onwards (IST)", "सुबह ११ बजे से (भारतीय मानक समय)"),
-      },
-      {
-        id: "wedding",
-        title: choose("Shaadi", "शादी"),
-        when: confirmedTime ? [`DTSTART:${calendarTimestamp(weddingDate())}`] : [`DTSTART;VALUE=DATE:${invite.year}1125`, `DTEND;VALUE=DATE:${invite.year}1126`],
-        venue: "Rajkishori Garden, Jaderua Road, Pinto Park Rd, Morar, Gwalior, Madhya Pradesh 474005",
-        time: `${weddingTimeLabel()}${confirmedTime ? choose(" (IST)", " (भारतीय मानक समय)") : ""}`,
-      },
-    ];
-    const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Wedding Invitation//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH"];
-    events.forEach((item) => lines.push(
-      "BEGIN:VEVENT", `UID:${coupleId}-${item.id}-${invite.year}@wedding-invitation`, `DTSTAMP:${stamp}`,
-      ...item.when, `SUMMARY:${calendarEscape(`${coupleLabel} · ${item.title}`)}`, `LOCATION:${calendarEscape(item.venue)}`,
-      `DESCRIPTION:${calendarEscape(`${item.time}\n${choose("We look forward to celebrating with you in Gwalior.", "ग्वालियर में आपके साथ उत्सव मनाने की प्रतीक्षा है।")}`)}`,
-      "END:VEVENT",
-    ));
-    lines.push("END:VCALENDAR");
-    // Fold by UTF-8 byte length so Hindi content stays valid in calendar clients.
-    const folded = lines.map((line) => {
-      const encoder = new TextEncoder();
-      let result = "";
-      let length = 0;
-      for (const character of line) {
-        const bytes = encoder.encode(character).length;
-        if (length + bytes > 74) { result += "\r\n "; length = 1; }
-        result += character;
-        length += bytes;
-      }
-      return result;
-    }).join("\r\n");
-    const url = URL.createObjectURL(new Blob([`${folded}\r\n`], { type: "text/calendar;charset=utf-8" }));
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "wedding-celebrations.ics";
-    document.body.append(link);
-    link.click();
-    link.remove();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-  });
-}
-
-function playChimes() {
-  if (!audioContext || !soundEnabled) return;
-  const start = audioContext.currentTime;
-  [261.63, 329.63, 392, 523.25].forEach((frequency, index) => {
-    const oscillator = audioContext.createOscillator();
-    const volume = audioContext.createGain();
-    const at = start + index * 0.65;
-    oscillator.type = "sine";
-    oscillator.frequency.value = frequency;
-    volume.gain.setValueAtTime(0, at);
-    volume.gain.linearRampToValueAtTime(0.024, at + 0.12);
-    volume.gain.exponentialRampToValueAtTime(0.0001, at + 3.6);
-    oscillator.connect(volume);
-    volume.connect(audioContext.destination);
-    oscillator.start(at);
-    oscillator.stop(at + 3.8);
-    oscillator.addEventListener("ended", () => { oscillator.disconnect(); volume.disconnect(); }, { once: true });
-  });
-}
-
 function stopMusic() {
   musicRequest += 1;
   soundEnabled = false;
-  clearInterval(musicTimer);
-  const context = audioContext;
-  audioContext = undefined;
-  if (context && context.state !== "closed") context.close().catch(() => {});
+  musicPending = false;
+  backgroundMusic?.pause();
+  if (backgroundMusic) backgroundMusic.currentTime = 0;
   updateMusicLabel();
 }
 
-$("#music-toggle")?.addEventListener("click", async () => {
-  if (soundEnabled || audioContext) { stopMusic(); return; }
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContextClass) {
-    $("#music-toggle").title = choose("Sound is unavailable in this browser", "इस ब्राउज़र में संगीत उपलब्ध नहीं है");
-    return;
-  }
+async function startMusic() {
+  if (!backgroundMusic) return;
+  if (soundEnabled || musicPending) return;
   const request = ++musicRequest;
+  musicPending = true;
+  setStatus("#music-status", "");
   try {
-    audioContext = new AudioContextClass();
-    await audioContext.resume();
+    await backgroundMusic.play();
     if (request !== musicRequest) return;
+    musicPending = false;
     soundEnabled = true;
-    playChimes();
-    musicTimer = window.setInterval(playChimes, 8000);
     updateMusicLabel();
   } catch {
-    stopMusic();
+    if (request !== musicRequest) return;
+    musicPending = false;
+    soundEnabled = false;
+    updateMusicLabel();
+    setStatus("#music-status", choose("Music could not be played. Please try again.", "संगीत नहीं चल सका। कृपया फिर कोशिश करें।"));
   }
+}
+
+$("#music-toggle")?.addEventListener("click", () => {
+  if (soundEnabled || musicPending) { stopMusic(); return; }
+  void startMusic();
 });
 
 window.addEventListener("pagehide", () => {
@@ -323,9 +253,9 @@ window.addEventListener("pageshow", () => {
   updateCountdown();
   if (confirmedYear) {
     clearInterval(countdownTimer);
-    countdownTimer = window.setInterval(updateCountdown, 60000);
+    countdownTimer = window.setInterval(updateCountdown, 1000);
   }
 });
 
 setLanguage("en");
-if (confirmedYear) countdownTimer = window.setInterval(updateCountdown, 60000);
+if (confirmedYear) countdownTimer = window.setInterval(updateCountdown, 1000);
