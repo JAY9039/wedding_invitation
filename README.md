@@ -14,7 +14,8 @@ No installation or build is required. The public invitation is [sharmaji-ki-shaa
 ## Included
 
 - Invitation-opening animation; original palace illustration; indigo, ivory and gold styling.
-- English/Hindi switch, a November calendar highlighting both celebrations, event cards with venue names and pin-icon Google Maps directions.
+- Carousel-like scroll reveals across the invitation, calendar, celebration cards, and RSVP; respects reduced-motion preferences.
+- English/Hindi switch, a November calendar highlighting both celebrations, and an alternating two-day timeline with event times, venue addresses, and Google Maps directions.
 - Local RSVP message preparation and preview, followed by a WhatsApp link to +91 9039887856. Nothing is sent automatically or stored by the site.
 - Optional looping background music from `dist/assets/tune.mp3`, enabled only by a guest's click.
 - Keyboard focus handling and reduced-motion support.

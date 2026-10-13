@@ -259,3 +259,56 @@ window.addEventListener("pageshow", () => {
 
 setLanguage("en");
 if (confirmedYear) countdownTimer = window.setInterval(updateCountdown, 1000);
+
+function initScrollReveal() {
+  if (reducedMotion.matches || !("IntersectionObserver" in window)) return;
+
+  const targets = $$(
+    [
+      "#home .hero-copy",
+      "#home .hero-art",
+      "#invitation > .section-lotus",
+      "#invitation > .eyebrow",
+      "#invitation > h2",
+      "#invitation > .intro-copy",
+      "#invitation > .hindi-invitation",
+      "#invitation .families > article",
+      "#invitation .family-join",
+      "#invitation > .save-date",
+      "#invitation > #countdown",
+      "#celebrations .section-heading",
+      "#celebrations .event-card",
+      "#celebrations .timezone-note",
+      "#rsvp .rsvp-intro",
+      "#rsvp .rsvp-card",
+      ".closing > .ornament",
+      ".closing > p",
+      ".closing > h2",
+      ".closing > .section-lotus",
+    ].join(", "),
+  );
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -48px 0px" },
+  );
+
+  targets.forEach((element, index) => {
+    element.classList.add("scroll-reveal");
+    element.dataset.reveal =
+      element.matches("#home .hero-copy, #invitation .families > article:first-child, #celebrations .event-card:first-child, #rsvp .rsvp-intro")
+        ? "left"
+        : element.matches("#home .hero-art, #invitation .families > article:last-child, #celebrations .event-card:last-child, #rsvp .rsvp-card")
+          ? "right"
+          : "up";
+    element.style.setProperty("--reveal-delay", `${(index % 5) * 80}ms`);
+    observer.observe(element);
+  });
+}
+
+initScrollReveal();
