@@ -1,11 +1,10 @@
-// Add the couple's confirmed names, wedding year and time here when available.
-// weddingTime accepts a 24-hour India-local time such as "19:30".
+// Confirmed wedding details. weddingTime uses 24-hour Indian Standard Time.
 export const invite = {
   couple: {
-    bride: { en: "The Bride", hi: "दुल्हन" },
-    groom: { en: "The Groom", hi: "दूल्हा" },
+    groom: { en: "Jay Sharma", hi: "जय शर्मा" },
+    bride: { en: "Sneha Sharma", hi: "स्नेहा शर्मा" },
   },
-  year: null,
-  weddingTime: null,
+  year: 2026,
+  weddingTime: "20:00",
   whatsapp: "919039887856",
 };

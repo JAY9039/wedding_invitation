@@ -24,7 +24,7 @@ function weddingTimeLabel() {
   const date = new Date(`2000-01-01T${invite.weddingTime}:00+05:30`);
   return new Intl.DateTimeFormat(language === "hi" ? "hi-IN" : "en-IN", {
     hour: "numeric", minute: "2-digit", timeZone: "Asia/Kolkata",
-  }).format(date);
+  }).format(date) + choose(" onwards", " से");
 }
 
 function updateMusicLabel() {
@@ -55,7 +55,7 @@ function setLanguage(nextLanguage) {
     });
   });
   $$("[data-couple]").forEach((element) => {
-    element.textContent = `${invite.couple.bride[language]} ${choose("&", "और")} ${invite.couple.groom[language]}`;
+    element.textContent = `${invite.couple.groom[language]} ${choose("&", "और")} ${invite.couple.bride[language]}`;
   });
   $$("[data-year]").forEach((element) => { element.textContent = confirmedYear ? invite.year : ""; });
   $$("[data-wedding-time]").forEach((element) => { element.textContent = weddingTimeLabel(); });
@@ -213,25 +213,29 @@ if (saveDate) {
     event.preventDefault();
     if (!confirmedYear) return;
     const stamp = calendarTimestamp(new Date());
+    const coupleLabel = `${invite.couple.groom[language]} ${choose("&", "और")} ${invite.couple.bride[language]}`;
+    const coupleId = `${invite.couple.groom.en}-${invite.couple.bride.en}-${invite.whatsapp}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
     const events = [
       {
         id: "engagement",
         title: choose("Lagan Sagaai / Engagement", "लगन सगाई / सगाई"),
         when: [`DTSTART:${calendarTimestamp(new Date(`${invite.year}-11-24T11:00:00+05:30`))}`],
         venue: "Hotel Gwalior Regency, a member of Radisson Individuals, Link Road, near the City Bus Stand, Gwalior, Madhya Pradesh 474002",
+        time: choose("11:00 AM onwards (IST)", "सुबह ११ बजे से (भारतीय मानक समय)"),
       },
       {
         id: "wedding",
         title: choose("Shaadi", "शादी"),
         when: confirmedTime ? [`DTSTART:${calendarTimestamp(weddingDate())}`] : [`DTSTART;VALUE=DATE:${invite.year}1125`, `DTEND;VALUE=DATE:${invite.year}1126`],
         venue: "Rajkishori Garden, Jaderua Road, Pinto Park Rd, Morar, Gwalior, Madhya Pradesh 474005",
+        time: `${weddingTimeLabel()}${confirmedTime ? choose(" (IST)", " (भारतीय मानक समय)") : ""}`,
       },
     ];
     const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Wedding Invitation//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH"];
     events.forEach((item) => lines.push(
-      "BEGIN:VEVENT", `UID:${item.id}-${invite.year}@wedding-invitation`, `DTSTAMP:${stamp}`,
-      ...item.when, `SUMMARY:${calendarEscape(item.title)}`, `LOCATION:${calendarEscape(item.venue)}`,
-      `DESCRIPTION:${calendarEscape(choose("We look forward to celebrating with you in Gwalior.", "ग्वालियर में आपके साथ उत्सव मनाने की प्रतीक्षा है।"))}`,
+      "BEGIN:VEVENT", `UID:${coupleId}-${item.id}-${invite.year}@wedding-invitation`, `DTSTAMP:${stamp}`,
+      ...item.when, `SUMMARY:${calendarEscape(`${coupleLabel} · ${item.title}`)}`, `LOCATION:${calendarEscape(item.venue)}`,
+      `DESCRIPTION:${calendarEscape(`${item.time}\n${choose("We look forward to celebrating with you in Gwalior.", "ग्वालियर में आपके साथ उत्सव मनाने की प्रतीक्षा है।")}`)}`,
       "END:VEVENT",
     ));
     lines.push("END:VCALENDAR");

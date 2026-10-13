@@ -1,4 +1,4 @@
-# Gwalior wedding invitation
+# Jay & Sneha's wedding invitation
 
 A standalone, mobile-friendly invitation inspired by the requested Dreams Invite reference. The existing portfolio is unaffected.
 
@@ -7,9 +7,9 @@ A standalone, mobile-friendly invitation inspired by the requested Dreams Invite
 From this directory run `npm run dev`, then open http://127.0.0.1:4173.
 No installation or build is required. Deploy the contents of `dist` to any static host.
 
-## Details still needed
+## Personalization
 
-Edit `dist/invite-config.js` to enter the bride's and groom's English/Hindi names, confirmed year, and wedding start time (`HH:MM`, India time). Names currently use explicit bride/groom placeholders. The year is omitted and wedding time reads “Time to be announced”; calendar download and countdown activate only when a year is supplied.
+`dist/invite-config.js` contains Jay Sharma and Sneha Sharma's names in English/Hindi, the confirmed year (2026), and wedding start time (`20:00`, India time). Jay appears first throughout, as requested for the groom's family invitation. Both sets of parents are included in `dist/index.html`. Engagement: 24 November at 11 AM onwards; Shaadi: 25 November at 8 PM onwards.
 
 ## Included
 
