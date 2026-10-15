@@ -1,6 +1,6 @@
 # Digital Wedding Invitation App
 
-This repository contains the code and assets for a dual-language (English and Hindi) digital wedding invitation. The application runs independently as a local web project, featuring customizable event details, a countdown, and RSVP capabilities.
+This repository contains the code and assets for a dual-language (English and Hindi) digital wedding invitation. The application runs independently as a local web project, featuring customizable event details, a countdown, and an interactive celebration reply that guests can share through WhatsApp.
 
 ## Technical Setup & Running the App
 
@@ -17,8 +17,8 @@ This folder contains the complete wedding invitation project, including all code
 
 - `dist/index.html`: Invitation text, family details, event cards, and venues.
 - `dist/styles.css`: Colors, typography, and responsive layout.
-- `dist/invite-config.js`: Couple's names, year, wedding time, and RSVP number.
-- `dist/app.js`: Language switch, countdown, RSVP, and music logic.
+- `dist/invite-config.js`: Couple's names, year, wedding time, and WhatsApp contact.
+- `dist/app.js`: Language switch, countdown, celebration reply, and music logic.
 - `dist/assets/`: Original palace artwork, lotus icon, and social preview image.
 - `server.mjs`: The local preview server.
 - `README.md`: Further project details.

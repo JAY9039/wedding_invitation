@@ -70,3 +70,26 @@ html[lang=hi] .eyebrow{letter-spacing:.5px;font-size:12px}html[lang=hi] h1{font-
 .event-timeline .location-detail span{max-width:300px;line-height:1.55}
 @media(max-width:760px){.event-timeline{gap:24px;padding-left:28px}.event-timeline::before{left:7px;transform:none}.event-timeline>.event-card,.event-timeline>.event-card.engagement,.event-timeline>.event-card.wedding{width:100%;align-self:stretch}.event-timeline>.event-card.engagement::after,.event-timeline>.event-card.wedding::after{left:-27px;right:auto}}
 @media(min-width:761px){.event-timeline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px}.event-timeline::before,.event-timeline>.event-card::after{display:none}.event-timeline>.event-card,.event-timeline>.event-card.engagement,.event-timeline>.event-card.wedding{width:100%;align-self:stretch}}
+.reply-section{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(38px,7vw,96px);align-items:center;background:radial-gradient(ellipse at 15% 50%,#fffdf7 0,transparent 52%),#eee9de;border-block:1px solid #e0d7c7}
+.reply-intro .section-lotus{margin:0 0 22px;width:49px;height:37px}
+.reply-intro>.eyebrow{color:var(--gold-dark);font-size:9px;letter-spacing:1.8px;margin-bottom:17px}
+.reply-intro h2{font-size:clamp(43px,4.3vw,58px);max-width:460px}
+.reply-intro>p:not(.eyebrow){font-size:12px;color:var(--muted);margin-top:21px;max-width:390px}
+.reply-keepsake{display:grid;grid-template-columns:auto 24px auto;align-items:center;justify-content:start;column-gap:8px;margin-top:36px;color:var(--gold-dark)}
+.reply-keepsake span{font:42px/1 var(--serif)}
+.reply-keepsake i{height:1px;width:24px;background:var(--gold)}
+.reply-keepsake small{grid-column:1/4;margin-top:8px;font-size:8px;letter-spacing:2px;color:#8d877d}
+.reply-card{position:relative;padding:35px 38px 31px;background:#fffdf8;border:1px solid #d8cfbd;box-shadow:0 18px 50px #252e4c0b}
+.reply-card::before{content:"";position:absolute;inset:7px;border:1px solid #e7dfd0;pointer-events:none}
+.reply-card::after{content:"✧";position:absolute;top:-13px;left:50%;padding:0 12px;background:#eee9de;color:var(--gold-dark);font-size:20px;transform:translateX(-50%)}
+.reply-card-heading{padding:5px 15px 0;text-align:center}
+.reply-card-heading .eyebrow{color:var(--gold-dark);font-size:9px;letter-spacing:1.8px}
+.blessing-quote{max-width:530px;margin:22px auto 0;text-align:center;font:italic 26px/1.45 var(--serif);color:var(--ink)}
+.reply-card-ornament{display:flex;align-items:center;justify-content:center;gap:11px;margin:19px 0 14px;color:var(--gold-dark)}
+.reply-card-ornament span{width:38px;height:1px;background:var(--line)}
+.reply-card-ornament svg{width:34px;height:25px}
+.blessing-note{max-width:390px;margin:0 auto;color:var(--muted);text-align:center;font-size:11px;line-height:1.8}
+.reply-card .blessing-button{position:relative;display:flex;width:max-content;max-width:100%;min-width:210px;margin:22px auto 0;font-size:11px;gap:20px}
+@media(max-width:1050px){.reply-section{gap:45px}.reply-card{padding:31px 29px 27px}}
+@media(max-width:760px){.reply-section{grid-template-columns:1fr;gap:30px}.reply-intro h2{font-size:44px}.reply-intro>p:not(.eyebrow){max-width:440px}.reply-card{padding:29px 25px 25px}}
+@media(max-width:520px){.reply-card{padding:27px 20px 24px}.reply-card-heading .eyebrow{font-size:8px;letter-spacing:1.3px}.blessing-quote{font-size:23px}.reply-keepsake{margin-top:25px}}

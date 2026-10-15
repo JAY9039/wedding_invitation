@@ -190,8 +190,12 @@
               हिंदी
             </button>
           </div>
-          <a class="header-rsvp" href="#rsvp" data-en="RSVP" data-hi="जवाब दें"
-            >RSVP</a
+          <a
+            class="header-rsvp"
+            href="#reply"
+            data-en="Send wishes"
+            data-hi="जवाब दें"
+            >Send wishes</a
           >
         </div>
       </header>
@@ -641,150 +645,76 @@
           </p>
         </section>
 
-        <section id="rsvp" class="rsvp section-pad">
-          <div class="rsvp-intro">
+        <section id="reply" class="reply-section section-pad">
+          <div class="reply-intro">
             <svg class="section-lotus" aria-hidden="true">
               <use href="#lotus" />
             </svg>
             <p
               class="eyebrow"
-              data-en="YOUR PRESENCE IS OUR PRESENT"
-              data-hi="आपकी उपस्थिति ही हमारा उपहार है"
+              data-en="A LITTLE NOTE, A LOT OF LOVE"
+              data-hi="एक छोटा सा संदेश, ढेर सारा प्यार"
             >
-              YOUR PRESENCE IS OUR PRESENT
+              A LITTLE NOTE, A LOT OF LOVE
             </p>
             <h2
-              data-en="Will you celebrate with us?"
-              data-hi="क्या आप हमारी खुशियों में शामिल होंगे?"
+              data-en="Your blessings make our story complete."
+              data-hi="आपके आशीर्वाद से हमारी कहानी पूरी होगी।"
             >
-              Will you celebrate with us?
+              Your blessings make our story complete.
             </h2>
             <p
-              data-en="It would mean the world to have you by our side. Let us know, and we'll save a little extra joy for you."
-              data-hi="आपका साथ हमारी खुशियों को दोगुना कर देगा। हमें अपने आने की खबर दें, हमें आपका इंतज़ार रहेगा।"
+              data-en="Your kind wishes would be a treasured part of our new beginning. If you would like, send Jay and Sneha a little blessing for the journey ahead."
+              data-hi="आपकी स्नेहभरी शुभकामनाएँ हमारी नई शुरुआत का अनमोल हिस्सा होंगी। यदि आपका मन हो, तो जय और स्नेहा को आने वाले जीवन के लिए अपना आशीर्वाद भेजें।"
             >
-              It would mean the world to have you by our side. Let us know, and
-              we'll save a little extra joy for you.
+              Your kind wishes would be a treasured part of our new beginning.
+              If you would like, send Jay and Sneha a little blessing for the
+              journey ahead.
             </p>
-            <p class="rsvp-hindi" lang="hi">आप आएँगे, तो रौनक और बढ़ जाएगी।</p>
-            <a class="contact-number" href="tel:+919039887856"
-              >+91 90398 87856</a
-            >
+            <div class="reply-keepsake" aria-hidden="true">
+              <span>24</span><i></i><span>25</span>
+              <small>NOVEMBER · GWALIOR</small>
+            </div>
           </div>
-          <div class="rsvp-card">
-            <form id="rsvp-form">
-              <label for="guest-name" data-en="Your name" data-hi="आपका नाम"
-                >Your name</label
-              ><input
-                id="guest-name"
-                name="name"
-                type="text"
-                autocomplete="name"
-                placeholder="Your full name"
-                required
-                maxlength="80"
-              />
-              <div class="form-row">
-                <div>
-                  <label
-                    for="guest-count"
-                    data-en="Number of guests"
-                    data-hi="अतिथियों की संख्या"
-                    >Number of guests</label
-                  ><input
-                    id="guest-count"
-                    name="guests"
-                    type="number"
-                    min="1"
-                    max="10"
-                    step="1"
-                    value="1"
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    for="attendance"
-                    data-en="I'll be joining for"
-                    data-hi="मैं शामिल होऊँगा / होऊँगी"
-                    >I'll be joining for</label
-                  ><select id="attendance" name="attendance">
-                    <option
-                      value="both"
-                      data-en="Both celebrations"
-                      data-hi="दोनों समारोह"
-                    >
-                      Both celebrations
-                    </option>
-                    <option
-                      value="engagement"
-                      data-en="Lagan Sagaai"
-                      data-hi="लगन सगाई"
-                    >
-                      Lagan Sagaai
-                    </option>
-                    <option value="wedding" data-en="Shaadi" data-hi="शादी">
-                      Shaadi
-                    </option>
-                    <option
-                      value="unable"
-                      data-en="Sending my blessings"
-                      data-hi="शुभकामनाएँ भेज रहा/रही हूँ"
-                    >
-                      Sending my blessings
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <button type="submit" class="button button-indigo">
-                <span
-                  data-en="Prepare WhatsApp RSVP"
-                  data-hi="व्हाट्सऐप संदेश तैयार करें"
-                  >Prepare WhatsApp RSVP</span
-                ><svg aria-hidden="true"><use href="#arrow" /></svg>
-              </button>
-              <p
-                class="form-note"
-                data-en="You'll review your message before sending it on WhatsApp."
-                data-hi="व्हाट्सऐप पर भेजने से पहले आप अपना संदेश देख सकेंगे।"
-              >
-                You'll review your message before sending it on WhatsApp.
-              </p>
-            </form>
-            <div id="rsvp-review" hidden>
+          <div class="reply-card">
+            <div class="reply-card-heading">
               <p
                 class="eyebrow"
-                data-en="YOUR RSVP MESSAGE"
-                data-hi="आपका संदेश"
+                data-en="A BLESSING FOR THE JOURNEY AHEAD"
+                data-hi="नए सफ़र के लिए शुभकामनाएँ"
               >
-                YOUR RSVP MESSAGE
+                A BLESSING FOR THE JOURNEY AHEAD
               </p>
-              <p id="rsvp-message" class="rsvp-message"></p>
-              <a
-                id="whatsapp-send"
-                class="button button-indigo"
-                href="https://wa.me/919039887856"
-                target="_blank"
-                rel="noopener noreferrer"
-                ><span data-en="Continue to WhatsApp" data-hi="व्हाट्सऐप खोलें"
-                  >Continue to WhatsApp</span
-                ><svg aria-hidden="true"><use href="#arrow" /></svg></a
-              ><button
-                id="rsvp-edit"
-                type="button"
-                class="text-button"
-                data-en="Edit my response"
-                data-hi="जवाब बदलें"
-              >
-                Edit my response
-              </button>
             </div>
             <p
-              id="form-status"
-              class="sr-only"
-              role="status"
-              aria-live="polite"
-            ></p>
+              class="blessing-quote"
+              data-en="May your life together be filled with laughter, kindness, and a love that grows more beautiful with every passing year."
+              data-hi="आपका जीवन हँसी, स्नेह और ऐसे प्रेम से भरा रहे जो हर वर्ष और भी सुंदर होता जाए।"
+            >
+              May your life together be filled with laughter, kindness, and a
+              love that grows more beautiful with every passing year.
+            </p>
+            <div class="reply-card-ornament" aria-hidden="true">
+              <span></span><svg><use href="#lotus" /></svg><span></span>
+            </div>
+            <p
+              class="blessing-note"
+              data-en="Tap below to send this wish to Jay and Sneha. You can personalize it in WhatsApp before sending."
+              data-hi="यह शुभकामना जय और स्नेहा तक पहुँचाने के लिए नीचे दबाएँ। भेजने से पहले WhatsApp में इसे अपने शब्दों में लिख सकते हैं।"
+            >
+              Tap below to send this wish to Jay and Sneha. You can personalize
+              it in WhatsApp before sending.
+            </p>
+            <a
+              id="send-blessings"
+              class="button button-indigo blessing-button"
+              href="https://wa.me/"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><span data-en="Send your wishes" data-hi="शुभकामनाएँ भेजें"
+                >Send your wishes</span
+              ><svg aria-hidden="true"><use href="#arrow" /></svg
+            ></a>
           </div>
         </section>
         <section class="closing">
@@ -839,7 +769,7 @@
       <audio
         id="background-music"
         src="./assets/tune.mp3"
-        preload="none"
+        preload="auto"
         loop
         hidden
       ></audio>

@@ -6,5 +6,4 @@ export const invite = {
   },
   year: 2026,
   weddingTime: "20:00",
-  whatsapp: "919039887856",
 };
